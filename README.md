@@ -12,25 +12,36 @@ An AI-powered agent that analyzes cryptocurrency tokens for rug-pull risk, built
 
 ## 🚀 Quick Start
 
-### 1. Clone and Setup
+### 1. Install uv (if not already installed)
+
+```bash
+# macOS/Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Or with Homebrew
+brew install uv
+```
+
+### 2. Clone and Setup
 
 ```bash
 cd verisense-hack
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
+uv venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+uv sync
 ```
 
-### 2. Configure Environment
+### 3. Configure Environment
+
+Create a `.env` file with:
 
 ```bash
-cp .env.example .env
-# Edit .env and add your Google API key
+GOOGLE_API_KEY=your_api_key_here
 ```
 
 Get your Google AI API key from: https://ai.google.dev/gemini-api/docs/api-key
 
-### 3. Run the Agent
+### 4. Run the Agent
 
 ```bash
 # Interactive mode
@@ -39,19 +50,20 @@ python main.py
 # Analyze a specific token
 python main.py So11111111111111111111111111111111111111112
 
-# Show trending tokens
-python main.py --trending
+# Run as A2A server
+python -m src token_analysis
 ```
 
 ## 📖 Usage
 
-### Interactive Mode
+### Interactive CLI Mode
 
 ```
 🤖 > analyze EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
+🤖 > quick So11111111111111111111111111111111111111112
+🤖 > holders DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263
 🤖 > trending
-🤖 > quick DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263
-🤖 > holders So11111111111111111111111111111111111111112
+🤖 > help
 ```
 
 ### Programmatic Usage
@@ -70,31 +82,42 @@ async def main():
         result = await agent.quick_lookup("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v")
         print(result)
 
+        # Get trending tokens
+        trending = await agent.get_trending_tokens()
+        print(trending)
+
 asyncio.run(main())
 ```
 
 ## 🛠️ Tech Stack
 
-| Component       | Technology              |
-| --------------- | ----------------------- |
-| Agent Framework | LangChain + LangGraph   |
-| LLM             | Google Gemini 2.0 Flash |
-| Data Provider   | Cambrian MCP            |
-| Runtime         | Python 3.11+            |
+| Component       | Technology                                    |
+| --------------- | --------------------------------------------- |
+| Agent Framework | LangChain + LangGraph                         |
+| LLM             | Google Gemini 2.0 Flash                       |
+| Data Sources    | DexScreener, GoPlus, SlowMist, CertiK, Helius |
+| Package Manager | uv (Rust-based, ultra-fast)                   |
+| Runtime         | Python 3.12+                                  |
 
 ## 📁 Project Structure
 
 ```
 verisense-hack/
-├── main.py              # Entry point
-├── requirements.txt     # Dependencies
-├── .env.example         # Environment template
+├── main.py                  # Interactive CLI entry point
+├── __main__.py              # CLI entry script
+├── pyproject.toml           # Project configuration and dependencies
+├── uv.lock                  # Locked dependency versions
+├── .env                     # Environment variables (create this)
 ├── src/
 │   ├── __init__.py
-│   ├── agent.py         # Agent implementation
-│   ├── config.py        # Configuration
-│   └── prompts.py       # System prompts
-└── BUILD_GUIDE.md       # Detailed build documentation
+│   ├── __main__.py          # A2A server entrypoint
+│   ├── agent.py             # Core DeFi risk agent
+│   ├── agent_executor.py    # A2A framework executor
+│   ├── config.py            # Configuration settings
+│   ├── prompts.py           # System prompts
+│   ├── tools.py             # DeFi analysis tools
+│   └── utils.py             # Utility functions
+└── test_rugcheck.py         # Tool testing suite
 ```
 
 ## 🔑 Example Token Addresses
