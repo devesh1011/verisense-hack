@@ -1,7 +1,7 @@
 # pylint: disable=logging-fstring-interpolation
 import logging
 
-from typing import Any, override
+from typing import override
 
 from a2a.server.agent_execution import AgentExecutor, RequestContext
 from a2a.server.events.event_queue import EventQueue
@@ -42,7 +42,7 @@ class DeFiRiskAgentExecutor(AgentExecutor):
             task = new_task(context.message)
             await event_queue.enqueue_event(task)
         # invoke the underlying agent, using streaming results
-        async for event in self.agent.stream(query, task.context_id):
+        async for event in self.agent.stream(query, task.context_id):  # type: ignore
             if event["is_task_complete"]:
                 await event_queue.enqueue_event(
                     TaskArtifactUpdateEvent(
