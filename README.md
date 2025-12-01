@@ -1,6 +1,13 @@
-# 🛡️ DeFi Risk Assessment Agent
+# Aegis - DeFi Risk Assessment Agent
 
-An AI-powered agent that analyzes cryptocurrency tokens for rug-pull risk, built with LangChain, Google Gemini, and Cambrian MCP.
+An AI-powered agent that analyzes cryptocurrency tokens for rug-pull risk. Built on the A2A (Agent-to-Agent) Protocol and registered on the Verisense Network for autonomous interoperability.
+
+**Status:** Production Deployed | **Registry:** Verisense Network | **Protocol:** A2A Compatible
+
+## Live Endpoints
+
+- **Agent URL:** https://defirisk-agent-168242749906.us-west1.run.app
+- **Verisense Registry:** https://dashboard.verisense.network/agent/kGkUWKATZaG4be7q53MmsFaBDHJqQMrHVmgm7sG9vYiw7Adfh
 
 ## ✨ Features
 
@@ -89,13 +96,16 @@ async def main():
 asyncio.run(main())
 ```
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Component       | Technology                                    |
 | --------------- | --------------------------------------------- |
 | Agent Framework | LangChain + LangGraph                         |
 | LLM             | Google Gemini 2.0 Flash                       |
+| Protocol        | A2A (Agent-to-Agent)                          |
+| Registry        | Verisense Network                             |
 | Data Sources    | DexScreener, GoPlus, SlowMist, CertiK, Helius |
+| Deployment      | Google Cloud Run + Kubernetes                 |
 | Package Manager | uv (Rust-based, ultra-fast)                   |
 | Runtime         | Python 3.12+                                  |
 
@@ -134,4 +144,4 @@ MIT License
 
 ---
 
-_Built for Verisense Hackathon 2025_ 🚀
+**Aegis** - Protecting DeFi through intelligent token analysis, built for Verisense Hackathon 2025
